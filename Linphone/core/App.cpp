@@ -955,8 +955,8 @@ void App::initLocale() {
 	// #else
 	QByteArray forcedLanguage = qgetenv("LINPHONE_FORCE_LANGUAGE");
 	lInfo() << log().arg("LINPHONE_FORCE_LANGUAGE=%1").arg(forcedLanguage);
-	QLocale sysLocale =
-	    forcedLanguage.isEmpty() ? QLocale(QLocale::system().name()) : QLocale(QString::fromUtf8(forcedLanguage));
+	QLocale sysLocale = forcedLanguage.isEmpty() ? QLocale(QLocale::Turkish, QLocale::Turkey)
+	                                             : QLocale(QString::fromUtf8(forcedLanguage));
 	if (installLocale(*this, *mTranslatorCore, sysLocale)) {
 		qDebug() << "installed sys locale" << sysLocale.name();
 		setLocale(sysLocale.name());

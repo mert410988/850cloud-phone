@@ -116,7 +116,7 @@ LoginLayout {
 						id: openLinkButton
 						Layout.alignment: Qt.AlignCenter
                         Layout.topMargin: Utils.getSizeWithScreenRatio(18)
-						text: "linphone.org/contact"
+						text: "850cloud.com/iletisim"
 						style: ButtonStyle.secondary
 						onClicked: {
 							Qt.openUrlExternally(ConstantsCpp.ContactUrl)
@@ -457,7 +457,7 @@ LoginLayout {
 		},
 		Control.StackView {
 			id: rootStackView
-			initialItem: SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin ? secondItem : firstItem
+			initialItem: secondItem
 			anchors.left: parent.left
 			anchors.top: parent.top
 			anchors.bottom: parent.bottom

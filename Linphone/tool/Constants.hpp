@@ -63,14 +63,15 @@ public:
 	static constexpr char DefaultContactParametersOnRemove[] = "message-expires=0";
 	static constexpr int DefaultExpires = 600;
 	static constexpr int DefaultPublishExpires = 120;
-	static constexpr char DownloadUrl[] = "https://www.linphone.org/technical-corner/linphone";
+	static constexpr char DownloadUrl[] = "https://github.com/mert410988/850cloud-phone/releases";
 	static constexpr char VersionCheckReleaseUrl[] = "https://download.linphone.org/releases";
 	static constexpr char VersionCheckNightlyUrl[] = "https://download.linphone.org/snapshots";
-	static constexpr char PasswordRecoveryUrl[] = "https://subscribe.linphone.org/recovery/email";
-	static constexpr char CguUrl[] = "https://www.linphone.org/en/terms-of-use/";
-	static constexpr char PrivatePolicyUrl[] = "https://www.linphone.org/en/privacy-policy/";
-	static constexpr char ContactUrl[] = "https://www.linphone.org/contact";
-	static constexpr char TranslationUrl[] = "https://weblate.linphone.org/projects/linphone-desktop/";
+	static constexpr char PasswordRecoveryUrl[] = "https://850cloud.com/destek";
+	static constexpr char CguUrl[] = "https://850cloud.com/yasal/uyelik-sozlesmesi";
+	static constexpr char PrivatePolicyUrl[] = "https://850cloud.com/gizlilik-politikasi";
+	static constexpr char ContactUrl[] = "https://850cloud.com/iletisim";
+	static constexpr char Cloud850LoginUrl[] = "https://oim.850cloud.com/api/mobile/login";
+	static constexpr char TranslationUrl[] = "https://github.com/mert410988/850cloud-phone";
 
 	static constexpr int MaxMosaicParticipants =
 	    6; // From 7, the mosaic quality will be limited to avoid useless computations
@@ -78,7 +79,7 @@ public:
 	static constexpr char LinphoneBZip2_exe[] = "https://download.linphone.org/releases/windows/tools/bzip2/bzip2.exe";
 	static constexpr char LinphoneBZip2_dll[] = "https://download.linphone.org/releases/windows/tools/bzip2/bzip2.dll";
 	static constexpr char DefaultRlsUri[] = "sips:rls@sip.linphone.org";
-	static constexpr char DefaultLogsEmail[] = "linphone-desktop@belledonne-communications.com";
+	static constexpr char DefaultLogsEmail[] = "destek@850cloud.com";
 
 	static constexpr char DefaultFlexiAPIURL[] = "https://subscribe.linphone.org/api/"; // Need "/" at the end
 	static constexpr char RemoteProvisioningURL[] = "https://subscribe.linphone.org/api/provisioning";
@@ -97,6 +98,7 @@ public:
 	Q_PROPERTY(QString PrivatePolicyUrl MEMBER PrivatePolicyUrl CONSTANT)
 	Q_PROPERTY(QString ContactUrl MEMBER ContactUrl CONSTANT)
 	Q_PROPERTY(QString TranslationUrl MEMBER TranslationUrl CONSTANT)
+	Q_PROPERTY(QString Cloud850LoginUrl MEMBER Cloud850LoginUrl CONSTANT)
 	Q_PROPERTY(QString DefaultFont MEMBER DefaultFont CONSTANT)
 	Q_PROPERTY(QString DefaultLocale MEMBER DefaultLocale CONSTANT)
 	Q_PROPERTY(int maxMosaicParticipants MEMBER MaxMosaicParticipants CONSTANT)

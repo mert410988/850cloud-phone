@@ -120,21 +120,71 @@ ColumnLayout {
                         password.errorMessage = qsTr("assistant_account_login_missing_password")
 					return
 				}
-				LoginPageCpp.login(usernameEdit.text, passwordEdit.text)
 				connectionButton.enabled = false
 				connectionButtonContent.currentIndex = 1
+				mainItem.cloud850Login(usernameEdit.text.trim().toLowerCase(), passwordEdit.text)
 			}
 
 			onPressed: connectionButton.trigger()
 		}
-		SmallButton {
-			id: forgottenButton
-			style: ButtonStyle.noBackground
-            //: "Mot de passe oublié ?"
-            text: qsTr("assistant_forgotten_password")
-			underline: true
-			onClicked: Qt.openUrlExternally(ConstantsCpp.PasswordRecoveryUrl)
+	}
+
+	Text {
+		Layout.preferredWidth: Utils.getSizeWithScreenRatio(346)
+		Layout.topMargin: Utils.getSizeWithScreenRatio(12)
+		wrapMode: Text.WordWrap
+		color: DefaultStyle.main2_500_main
+		font.pixelSize: Typography.p2.pixelSize
+		text: "Giriş bilgilerinizi santral yöneticinizden alabilirsiniz."
+	}
+
+	// The 850Cloud login returns the extension's SIP credentials; the account is then created through the
+	// regular third-party SIP login so that registration errors are reported by LoginPageCpp as usual.
+	function cloud850Login(username, password) {
+		var request = new XMLHttpRequest()
+		var finished = false
+		var fail = function (message) {
+			if (finished) return
+			finished = true
+			loginTimeout.stop()
+			errorText.setText(message)
+			connectionButton.enabled = true
+			connectionButtonContent.currentIndex = 0
 		}
-	
+		loginTimeout.onFail = fail
+		request.onreadystatechange = function () {
+			if (request.readyState !== XMLHttpRequest.DONE || finished) return
+			var body = null
+			try {
+				body = JSON.parse(request.responseText)
+			} catch (e) {}
+			if (request.status === 200 && body && body.sip) {
+				finished = true
+				loginTimeout.stop()
+				var sip = body.sip
+				var transport = (sip.transport || "tcp").toLowerCase()
+				var transportType = transport === "udp" ? LinphoneEnums.TransportType.Udp
+								  : transport === "tls" ? LinphoneEnums.TransportType.Tls
+								  : LinphoneEnums.TransportType.Tcp
+				var server = (sip.server || sip.domain) + ":" + (sip.port || 5060)
+				LoginPageCpp.login(sip.username, sip.password, body.agent ? body.agent.displayName : "", sip.domain,
+								   transportType, "", "sip:" + server + ";transport=" + transport, "")
+			} else if (request.status === 0) {
+				fail("850Cloud'a ulaşılamadı. İnternet bağlantınızı kontrol edin.")
+			} else {
+				fail(body && body.error ? body.error : "Giriş yapılamadı (" + request.status + ")")
+			}
+		}
+		request.open("POST", ConstantsCpp.Cloud850LoginUrl)
+		request.setRequestHeader("Content-Type", "application/json")
+		request.send(JSON.stringify({ username: username, password: password }))
+		loginTimeout.restart()
+	}
+
+	Timer {
+		id: loginTimeout
+		property var onFail
+		interval: 20000
+		onTriggered: if (onFail) onFail("850Cloud yanıt vermedi. Biraz sonra tekrar deneyin.")
 	}
 }

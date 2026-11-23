@@ -20,6 +20,8 @@
 
 #include "CoreModel.hpp"
 
+#include <algorithm>
+
 #include <QApplication>
 #include <QCoreApplication>
 #include <QDir>
@@ -88,6 +90,7 @@ void CoreModel::start() {
 	auto config = mCore->getConfig();
 	QString userAgent = ToolModel::computeUserAgent(config);
 	mCore->setUserAgent(Utils::appStringToCoreString(userAgent), LINPHONESDK_VERSION);
+	applyCloud850CodecPolicy();
 	mCore->start();
 	migrate();
 	setPathAfterStart();
@@ -118,6 +121,28 @@ void CoreModel::start() {
 	        [this] { emit magicSearchResultReceived(mMagicSearch->mLastSearch); });
 	mStarted = true;
 }
+// Operator trunks behind the 850Cloud PBX only carry G.711: when Opus or G.722 is negotiated the PBX relays
+// silence to the far end. Applied once so that later changes made in the codec settings are kept.
+void CoreModel::applyCloud850CodecPolicy() {
+	auto config = mCore->getConfig();
+	if (config->getInt("cloud850", "codec_policy_applied", 0)) return;
+	const std::list<std::string> preferred = {"PCMA", "PCMU"};
+	std::list<std::shared_ptr<linphone::PayloadType>> ordered;
+	auto payloadTypes = mCore->getAudioPayloadTypes();
+	for (const auto &mime : preferred) {
+		for (const auto &payloadType : payloadTypes) {
+			if (payloadType->getMimeType() == mime) ordered.push_back(payloadType);
+		}
+	}
+	for (const auto &payloadType : payloadTypes) {
+		bool isPreferred = std::find(preferred.begin(), preferred.end(), payloadType->getMimeType()) != preferred.end();
+		payloadType->enable(isPreferred);
+		if (!isPreferred) ordered.push_back(payloadType);
+	}
+	mCore->setAudioPayloadTypes(ordered);
+	config->setInt("cloud850", "codec_policy_applied", 1);
+}
+
 // -----------------------------------------------------------------------------
 
 bool CoreModel::isInitialized() const {

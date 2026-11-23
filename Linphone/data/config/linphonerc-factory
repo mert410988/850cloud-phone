@@ -15,6 +15,7 @@ lime_update_threshold=86400
 
 [misc]
 aggregate_imdn=1
+version_check_url_root=
 enable_basic_to_client_group_chat_room_migration=0
 enable_simple_group_chat_message_state=0
 notify_each_friend_individually_when_presence_received=0
@@ -40,13 +41,18 @@ use_cpim=1
 zrtp_key_agreements_suites=MS_ZRTP_KEY_AGREEMENT_K255_MLK512,MS_ZRTP_KEY_AGREEMENT_K255_KYB512
 
 [sound]
-#remove this property for any application that is not Linphone public version itself
-ec_calibrator_cool_tones=1
 ec_filter=MSWebRTCAEC
 
 [ui]
 assistant_supports_phone_numbers/readonly=0
 use_qrcode=0
+theme_main_color=850cloud
+disable_chat_feature=1
+disable_meetings_feature=1
+disable_broadcast_feature=1
+assistant_hide_create_account=1
+assistant_disable_qr_code=1
+assistant_third_party_sip_account_transport=TCP
 
 [video]
 auto_resize_preview_to_keep_ratio=1

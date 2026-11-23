@@ -56,8 +56,7 @@ LoginLayout {
                 Accessible.role: Accessible.Heading
                 Accessible.name: text
                 Accessible.focusable: true
-                //: Connexion
-                text: qsTr("assistant_account_login")
+                text: "850Cloud girişi"
 				font {
                     pixelSize: Typography.h1.pixelSize
                     weight: Typography.h1.weight
@@ -100,6 +99,14 @@ LoginLayout {
 			ColumnLayout {
 				id: content
 				spacing: 0
+				Text {
+					Layout.preferredWidth: loginForm.width
+					Layout.bottomMargin: Utils.getSizeWithScreenRatio(24)
+					wrapMode: Text.WordWrap
+					color: DefaultStyle.main2_700
+					font.pixelSize: Typography.p1.pixelSize
+					text: "Dahili hattınız bilgisayarınızda. Firmanızın size verdiği kullanıcı adı ve şifreyle giriş yapın."
+				}
 				LoginForm {
 					id: loginForm
 				}
@@ -108,12 +115,12 @@ LoginLayout {
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(47)
                     Layout.topMargin: Utils.getSizeWithScreenRatio(39)
 					visible: !SettingsCpp.assistantHideThirdPartyAccount
-                    //: "Compte SIP tiers"
-                    text: qsTr("assistant_login_third_party_sip_account_title")
+                    text: "SIP bilgileriyle elle giriş"
 					style: ButtonStyle.secondary
 					onClicked: {mainItem.useSIPButtonClicked()}
 				}
 				BigButton {
+					visible: false
 					Layout.preferredWidth: loginForm.width
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(47)
                     Layout.topMargin: Utils.getSizeWithScreenRatio(25)

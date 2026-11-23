@@ -67,6 +67,7 @@ public:
 	void useFetchConfig(QString filePath, bool askForConfirmation = true);
 	bool setFetchConfig(QString filePath);
 	void migrate();
+	void applyCloud850CodecPolicy();
 
 	void searchInMagicSearch(QString filter,
 	                         int sourceFlags,

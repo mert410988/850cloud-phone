@@ -155,6 +155,7 @@ constexpr char Constants::CguUrl[];
 constexpr char Constants::PrivatePolicyUrl[];
 constexpr char Constants::ContactUrl[];
 constexpr char Constants::TranslationUrl[];
+constexpr char Constants::Cloud850LoginUrl[];
 
 constexpr int Constants::MaxMosaicParticipants;
 
