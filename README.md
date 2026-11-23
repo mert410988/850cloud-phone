@@ -1,3 +1,20 @@
+# 850Cloud Phone
+
+850Cloud Bulut Santral için Windows softphone. [Linphone Desktop](https://gitlab.linphone.org/BC/public/linphone-desktop) 6.2.4 üzerine kurulmuş, değiştirilmiş bir sürümdür ve aynı GNU GPLv3 lisansıyla dağıtılır.
+
+Linphone'a göre değişiklikler:
+
+- 850Cloud adı, simgesi, renkleri ve Türkçe arayüz.
+- Giriş ekranı 850Cloud kullanıcı adı ve şifresiyle dahili bilgilerini alır ve SIP hesabını TCP üzerinden kurar.
+- İlk açılışta yalnızca G.711 (PCMA, PCMU) codec'leri açılır.
+- linphone.org hesap açma, sohbet ve toplantı özellikleri kapalıdır.
+
+Windows kurulum dosyası [Releases](https://github.com/mert410988/850cloud-phone/releases) sayfasındadır ve `.github/workflows/windows.yml` ile GitHub Actions'ta derlenir.
+
+Linphone ve Belledonne Communications adları ve logoları bu sürümde kullanılmaz; bu proje Belledonne Communications ile bağlantılı değildir.
+
+---
+
 # Linphone Desktop
 
 Linphone is an open source softphone for voice and video over IP calling and instant messaging.
