@@ -51,7 +51,7 @@ jobs:
           msystem: MINGW64
           suppress-deprecation-warnings: msystem-mingw64
           install: >-
-            base-devel make perl bzip2 nasm yasm doxygen gawk sed patch intltool
+            base-devel make perl bzip2 nasm yasm gawk sed patch intltool
             mingw-w64-x86_64-toolchain mingw-w64-x86_64-libsystre
 
       - uses: actions/setup-python@v5
@@ -69,8 +69,12 @@ jobs:
           modules: qtnetworkauth qtshadertools
           cache: true
 
-      - name: NSIS
-        run: choco install nsis -y --no-progress
+      # MSYS2's doxygen is a POSIX build and misreads the Windows paths in the generated Doxyfile.
+      - name: NSIS and Doxygen
+        run: |
+          choco install nsis -y --no-progress
+          choco install doxygen.install --version 1.9.7 -y --no-progress
+          & "C:\Program Files\doxygen\bin\doxygen.exe" --version
 
       - uses: ilammy/msvc-dev-cmd@v1
         with:
@@ -97,7 +101,9 @@ jobs:
             -DLINPHONEAPP_VERSION="$env:APP_VERSION" `
             -DLINPHONESDK_VERSION="$env:SDK_VERSION" `
             -DLINPHONESDK_STATE=release `
-            -DLINPHONESDK_BRANCH="release/5.5"
+            -DLINPHONESDK_BRANCH="release/5.5" `
+            -DDOXYGEN_EXECUTABLE="C:/Program Files/doxygen/bin/doxygen.exe" `
+            -DLINPHONESDK_DOXYGEN_PROGRAM="C:/Program Files/doxygen/bin/doxygen.exe"
           if ($LASTEXITCODE -ne 0) { throw "configure failed" }
 
       - name: Build
