@@ -92,13 +92,14 @@ execute_process(
     OUTPUT_STRIP_TRAILING_WHITESPACE
 )
 
-set(LINPHONESDK_VERSION)
-execute_process(
-    COMMAND git describe
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/external/linphone-sdk
-    OUTPUT_VARIABLE LINPHONESDK_VERSION
-    OUTPUT_STRIP_TRAILING_WHITESPACE
-)
+if(NOT LINPHONESDK_VERSION)
+	execute_process(
+	    COMMAND git describe
+	    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/external/linphone-sdk
+	    OUTPUT_VARIABLE LINPHONESDK_VERSION
+	    OUTPUT_STRIP_TRAILING_WHITESPACE
+	)
+endif()
 
 include(application_info.cmake)
 string(TIMESTAMP CURRENT_YEAR "%Y")

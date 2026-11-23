@@ -15,6 +15,9 @@ concurrency:
 
 env:
   QT_VERSION: "6.10.3"
+  # Shallow checkouts carry no tags, so the versions normally taken from `git describe` are given here.
+  APP_VERSION: "1.0.0"
+  SDK_VERSION: "5.5.36"
   BUILD_DIR: C:\b
   SCCACHE_GHA_ENABLED: "true"
 
@@ -82,7 +85,11 @@ jobs:
             -DENABLE_PQCRYPTO=OFF `
             -DENABLE_G729=ON `
             -DENABLE_GPL_THIRD_PARTIES=OFF `
-            -DENABLE_APP_PACKAGING=ON
+            -DENABLE_APP_PACKAGING=ON `
+            -DLINPHONEAPP_VERSION="$env:APP_VERSION" `
+            -DLINPHONESDK_VERSION="$env:SDK_VERSION" `
+            -DLINPHONESDK_STATE=release `
+            -DLINPHONESDK_BRANCH="release/5.5"
           if ($LASTEXITCODE -ne 0) { throw "configure failed" }
 
       - name: Build
