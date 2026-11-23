@@ -39,11 +39,10 @@ jobs:
           release: false
           update: true
           msystem: MINGW64
+          suppress-deprecation-warnings: msystem-mingw64
           install: >-
-            base-devel make perl bzip2 nasm gawk sed patch intltool
-            mingw-w64-x86_64-toolchain mingw-w64-x86_64-yasm
-            mingw-w64-x86_64-doxygen mingw-w64-x86_64-graphviz
-            mingw-w64-x86_64-libsystre
+            base-devel make perl bzip2 nasm yasm doxygen gawk sed patch intltool
+            mingw-w64-x86_64-toolchain mingw-w64-x86_64-libsystre
 
       - uses: actions/setup-python@v5
         id: python
