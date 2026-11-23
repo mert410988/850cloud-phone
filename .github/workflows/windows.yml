@@ -32,6 +32,13 @@ jobs:
       - name: Enable long paths
         run: git config --system core.longpaths true
 
+      # The libvpx build runs `bash` from PATH; the WSL launcher in System32 would shadow MSYS2's bash.
+      - name: Remove WSL bash launcher
+        run: |
+          takeown /f C:\Windows\System32\bash.exe
+          icacls C:\Windows\System32\bash.exe /grant administrators:F
+          Remove-Item -Force C:\Windows\System32\bash.exe
+
       - uses: actions/checkout@v4
         with:
           submodules: recursive
