@@ -83,6 +83,7 @@ jobs:
             -DPython3_EXECUTABLE="${{ steps.python.outputs.python-path }}" `
             -DENABLE_CRASH_HANDLER=OFF `
             -DENABLE_PQCRYPTO=OFF `
+            -DENABLE_AV1=OFF `
             -DENABLE_G729=ON `
             -DENABLE_GPL_THIRD_PARTIES=OFF `
             -DENABLE_APP_PACKAGING=ON `
